@@ -26,7 +26,9 @@ namespace Stok
             builder.Logging.AddDebug();
 #endif
 
-            return builder.Build();
+            var app = builder.Build();
+            Helpers.ServiceHelper.Initialize(app.Services);
+            return app;
         }
     }
 }

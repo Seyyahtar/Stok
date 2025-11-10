@@ -1,4 +1,3 @@
-using System;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Stok.Helpers
@@ -9,12 +8,7 @@ namespace Stok.Helpers
 
         public static void Initialize(IServiceProvider services)
         {
-            if (services == null)
-            {
-                throw new ArgumentNullException(nameof(services));
-            }
-
-            _services ??= services;
+            _services = services;
         }
 
         public static T GetRequiredService<T>() where T : notnull

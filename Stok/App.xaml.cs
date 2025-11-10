@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using Microsoft.Maui.Controls;
 using Stok.Helpers;
 using Stok.Pages;
@@ -13,19 +12,15 @@ namespace Stok
         public App(IServiceProvider serviceProvider, AuthService authService)
         {
             InitializeComponent();
-
-            ServiceHelper.Initialize(serviceProvider);
-            _authService = authService;
-
-            MainPage = new ContentPage();
-            _ = DetermineStartupPageAsync();
+            DetermineStartupPage();
         }
 
-        private async Task DetermineStartupPageAsync()
+        private async void DetermineStartupPage()
         {
-            await _authService.InitializeAsync();
+            var authService = ServiceHelper.GetRequiredService<AuthService>();
+            await authService.InitializeAsync();
 
-            if (_authService.CurrentUser == null)
+            if (authService.CurrentUser == null)
             {
                 MainPage = new NavigationPage(new LoginPage());
             }
