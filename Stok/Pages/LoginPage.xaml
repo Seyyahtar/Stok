@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Stok.Pages.LoginPage"
+             Title="S-Tok">
+    <ScrollView>
+        <VerticalStackLayout Padding="32" Spacing="20">
+            <Label Text="S-Tok"
+                   FontSize="36"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center" />
+
+            <HorizontalStackLayout Spacing="12" HorizontalOptions="Center">
+                <Button Text="Giriş Yap"
+                        Clicked="OnShowLogin"
+                        BackgroundColor="{Binding LoginButtonColor}"
+                        TextColor="White" />
+                <Button Text="Kayıt Ol"
+                        Clicked="OnShowRegister"
+                        BackgroundColor="{Binding RegisterButtonColor}"
+                        TextColor="White" />
+            </HorizontalStackLayout>
+
+            <VerticalStackLayout Spacing="12">
+                <Label Text="Kullanıcı Adı" />
+                <Entry Text="{Binding Username}"
+                       Placeholder="kullanıcı adınızı girin" />
+
+                <Label Text="E-posta"
+                       IsVisible="{Binding IsRegistering}" />
+                <Entry Text="{Binding Email}"
+                       Placeholder="eposta@adres.com"
+                       IsVisible="{Binding IsRegistering}" />
+
+                <Label Text="Şifre" />
+                <Entry Text="{Binding Password}"
+                       IsPassword="True"
+                       Placeholder="şifreniz" />
+
+                <Label Text="Şifre Tekrar"
+                       IsVisible="{Binding IsRegistering}" />
+                <Entry Text="{Binding ConfirmPassword}"
+                       Placeholder="şifre tekrar"
+                       IsPassword="True"
+                       IsVisible="{Binding IsRegistering}" />
+            </VerticalStackLayout>
+
+            <Label Text="{Binding Message}"
+                   TextColor="{Binding MessageColor}"
+                   IsVisible="{Binding HasMessage}" />
+
+            <Button Text="Devam"
+                    HeightRequest="54"
+                    Clicked="OnSubmit"
+                    BackgroundColor="{DynamicResource PrimaryColor}"
+                    TextColor="White" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
