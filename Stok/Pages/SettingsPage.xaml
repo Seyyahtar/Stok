@@ -25,7 +25,7 @@
 
             <Label Text="Veri Yönetimi"
                    FontSize="22"
-                   FontAttributes="Semibold" />
+                   FontAttributes="Bold" />
 
             <Frame Padding="16" HasShadow="False" BorderColor="{DynamicResource SecondaryColor}">
                 <VerticalStackLayout Spacing="12">

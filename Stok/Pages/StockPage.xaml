@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:cv="clr-namespace:Microsoft.Maui.Controls;assembly=Microsoft.Maui.Controls"
              x:Class="Stok.Pages.StockPage"
              Title="Envanter">
+
     <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,*"
           Padding="20"
           RowSpacing="12">
+
+        <!-- Üst Menü -->
         <Grid ColumnDefinitions="Auto,*,Auto"
               Grid.Row="0"
               Padding="0,0,0,8">
@@ -28,6 +32,7 @@
                     Clicked="OnFilterIconClicked" />
         </Grid>
 
+        <!-- Yan Menü -->
         <Frame Grid.Row="1"
                IsVisible="{Binding IsMenuOpen}"
                Padding="16"
@@ -53,11 +58,13 @@
             </VerticalStackLayout>
         </Frame>
 
+        <!-- Arama Çubuğu -->
         <SearchBar Grid.Row="2"
                    x:Name="Search"
                    Placeholder="Malzeme ara"
                    TextChanged="OnSearchTextChanged" />
 
+        <!-- Filtre Butonları -->
         <Grid Grid.Row="3"
               ColumnDefinitions="*,Auto"
               ColumnSpacing="12">
@@ -65,7 +72,8 @@
                 <FlexLayout BindableLayout.ItemsSource="{Binding FilterOptions}"
                             AlignItems="Center"
                             Direction="Row"
-                            Spacing="8">
+                            HorizontalOptions="Start"
+                            Margin="0,0,8,0">
                     <BindableLayout.ItemTemplate>
                         <DataTemplate>
                             <Button Text="{Binding Title}"
@@ -75,8 +83,8 @@
                                     Clicked="OnFilterClicked">
                                 <Button.Triggers>
                                     <DataTrigger TargetType="Button"
-                                                Binding="{Binding IsActive}"
-                                                Value="True">
+                                                 Binding="{Binding IsActive}"
+                                                 Value="True">
                                         <Setter Property="BackgroundColor" Value="{DynamicResource PrimaryColor}" />
                                         <Setter Property="TextColor" Value="White" />
                                     </DataTrigger>
@@ -93,6 +101,7 @@
                    HorizontalTextAlignment="End" />
         </Grid>
 
+        <!-- Başlık Satırı -->
         <Grid Grid.Row="4"
               ColumnDefinitions="*,Auto,Auto"
               ColumnSpacing="12"
@@ -112,10 +121,13 @@
                     Clicked="OnQuantitySortClicked" />
         </Grid>
 
+        <!-- Ana Liste -->
         <CollectionView Grid.Row="5"
                         ItemsSource="{Binding GroupedMaterials}"
                         IsGrouped="True"
                         SelectionMode="None">
+
+            <!-- Grup Başlıkları -->
             <CollectionView.GroupHeaderTemplate>
                 <DataTemplate>
                     <Grid ColumnDefinitions="Auto,*,Auto"
@@ -138,63 +150,64 @@
                     </Grid>
                 </DataTemplate>
             </CollectionView.GroupHeaderTemplate>
-            <CollectionView.GroupItemTemplate>
+
+            <!-- Grup Elemanları -->
+            <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Grid>
-                        <Grid BindableLayout.ItemsSource="{Binding VisibleItems}">
-                            <BindableLayout.ItemTemplate>
-                                <DataTemplate>
-                                    <SwipeView>
-                                        <SwipeView.RightItems>
-                                            <SwipeItems Mode="Reveal">
-                                                <SwipeItem Text="Sil"
-                                                           BackgroundColor="#B71C1C"
-                                                           CommandParameter="{Binding .}"
-                                                           Invoked="OnDeleteMaterial" />
-                                                <SwipeItem Text="Çıkar"
-                                                           BackgroundColor="#F57C00"
-                                                           CommandParameter="{Binding .}"
-                                                           Invoked="OnWithdrawMaterial" />
-                                                <SwipeItem Text="Düzenle"
-                                                           BackgroundColor="#1976D2"
-                                                           CommandParameter="{Binding .}"
-                                                           Invoked="OnEditMaterial" />
-                                            </SwipeItems>
-                                        </SwipeView.RightItems>
-                                        <Frame Margin="0,0,0,12"
-                                               Padding="14"
-                                               HasShadow="False"
-                                               BorderColor="{DynamicResource SecondaryColor}">
-                                            <Grid ColumnDefinitions="*,Auto"
-                                                  RowDefinitions="Auto,Auto,Auto"
-                                                  ColumnSpacing="12"
-                                                  RowSpacing="4">
-                                                <Label Text="{Binding Name}"
-                                                       FontSize="18"
-                                                       FontAttributes="Bold" />
-                                                <Label Grid.Column="1"
-                                                       Text="{Binding Quantity, StringFormat='Adet: {0}'}"
-                                                       VerticalOptions="Center"
-                                                       FontAttributes="Bold" />
-                                                <Label Grid.Row="1"
-                                                       Grid.ColumnSpan="2"
-                                                       Text="{Binding SerialOrLotDisplay}"
-                                                       FontSize="14"
-                                                       TextColor="{DynamicResource SecondaryTextColor}" />
-                                                <Label Grid.Row="2"
-                                                       Grid.ColumnSpan="2"
-                                                       Text="{Binding OwnerUser, StringFormat='Sahip: {0}'}"
-                                                       FontSize="13"
-                                                       TextColor="{DynamicResource SecondaryTextColor}" />
-                                            </Grid>
-                                        </Frame>
-                                    </SwipeView>
-                                </DataTemplate>
-                            </BindableLayout.ItemTemplate>
-                        </Grid>
-                    </Grid>
+                    <SwipeView>
+                        <SwipeView.RightItems>
+                            <SwipeItems Mode="Reveal">
+                                <SwipeItem Text="Sil"
+                                           BackgroundColor="#B71C1C"
+                                           CommandParameter="{Binding .}"
+                                           Invoked="OnDeleteMaterial" />
+                                <SwipeItem Text="Çıkar"
+                                           BackgroundColor="#F57C00"
+                                           CommandParameter="{Binding .}"
+                                           Invoked="OnWithdrawMaterial" />
+                                <SwipeItem Text="Düzenle"
+                                           BackgroundColor="#1976D2"
+                                           CommandParameter="{Binding .}"
+                                           Invoked="OnEditMaterial" />
+                            </SwipeItems>
+                        </SwipeView.RightItems>
+
+                        <Frame Margin="0,0,0,12"
+                               Padding="14"
+                               HasShadow="False"
+                               BorderColor="{DynamicResource SecondaryColor}">
+                            <Grid ColumnDefinitions="*,Auto"
+                                  RowDefinitions="Auto,Auto,Auto"
+                                  ColumnSpacing="12"
+                                  RowSpacing="4">
+                                <Label Text="{Binding Name}"
+                                       FontSize="18"
+                                       FontAttributes="Bold" />
+                                <Label Grid.Column="1"
+                                       Text="{Binding Quantity, StringFormat='Adet: {0}'}"
+                                       VerticalOptions="Center"
+                                       FontAttributes="Bold" />
+                                <Label Grid.Row="1"
+                                       Grid.ColumnSpan="2"
+                                       Text="{Binding SerialOrLotDisplay}"
+                                       FontSize="14"
+                                       TextColor="{DynamicResource SecondaryTextColor}" />
+                                <Label Grid.Row="2"
+                                       Grid.ColumnSpan="2"
+                                       Text="{Binding OwnerUser, StringFormat='Sahip: {0}'}"
+                                       FontSize="13"
+                                       TextColor="{DynamicResource SecondaryTextColor}" />
+                            </Grid>
+                        </Frame>
+                    </SwipeView>
                 </DataTemplate>
-            </CollectionView.GroupItemTemplate>
+            </CollectionView.ItemTemplate>
+
+            <!-- Dikey boşluklar -->
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical" ItemSpacing="8" />
+            </CollectionView.ItemsLayout>
+
         </CollectionView>
     </Grid>
 </ContentPage>

@@ -17,14 +17,14 @@
                 <VerticalStackLayout>
                     <Label Text="Oluşturan" />
                     <Label Text="{Binding CreatedByDisplay}"
-                           FontAttributes="Semibold"
+                           FontAttributes="Bold"
                            VerticalOptions="Center" />
                 </VerticalStackLayout>
             </Grid>
 
             <VerticalStackLayout Spacing="12">
                 <Label Text="Hastane"
-                       FontAttributes="Semibold" />
+                       FontAttributes="Bold" />
                 <Entry Placeholder="Hastane adı"
                        Text="{Binding Hospital}"
                        TextChanged="OnHospitalTextChanged" />
@@ -32,7 +32,7 @@
                                 SelectionMode="None"
                                 IsVisible="{Binding ShowHospitalSuggestions}">
                     <CollectionView.ItemsLayout>
-                        <VerticalLinearItemsLayout ItemSpacing="8" />
+                        <LinearItemsLayout Orientation="Vertical" ItemSpacing="8" />
                     </CollectionView.ItemsLayout>
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
@@ -59,7 +59,7 @@
 
             <VerticalStackLayout Spacing="12">
                 <Label Text="Doktor"
-                       FontAttributes="Semibold" />
+                       FontAttributes="Bold" />
                 <Entry Placeholder="Doktor adı"
                        Text="{Binding Doctor}"
                        TextChanged="OnDoctorTextChanged" />
@@ -67,7 +67,7 @@
                                 SelectionMode="None"
                                 IsVisible="{Binding ShowDoctorSuggestions}">
                     <CollectionView.ItemsLayout>
-                        <VerticalLinearItemsLayout ItemSpacing="8" />
+                        <LinearItemsLayout Orientation="Vertical" ItemSpacing="8" />
                     </CollectionView.ItemsLayout>
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
@@ -94,14 +94,14 @@
 
             <VerticalStackLayout Spacing="12">
                 <Label Text="Hasta"
-                       FontAttributes="Semibold" />
+                       FontAttributes="Bold" />
                 <Entry Placeholder="Hasta adı"
                        Text="{Binding Patient}" />
             </VerticalStackLayout>
 
             <VerticalStackLayout Spacing="12">
                 <Label Text="Hasta Notu (Opsiyonel)"
-                       FontAttributes="Semibold" />
+                       FontAttributes="Bold" />
                 <Editor HeightRequest="100"
                         AutoSize="TextChanges"
                         Text="{Binding Note}" />

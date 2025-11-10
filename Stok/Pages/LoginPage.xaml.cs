@@ -177,7 +177,9 @@ namespace Stok.Pages
                 return false;
             }
 
-            return Regex.IsMatch(email, "^[^@\s]+@[^@\s]+\\.[^@\s]+$");
+            return Regex.IsMatch(email, @"^[^@\s]+@[^@\s]+\.[^@\s]+$");
+
+
         }
 
         protected bool SetProperty<T>(ref T storage, T value, [CallerMemberName] string? propertyName = null)

@@ -52,13 +52,13 @@ namespace Stok.Pages
                 return;
             }
 
-            var current = await DisplayPromptAsync("Şifre Güncelle", "Mevcut şifrenizi girin:", isPassword: true);
+            var current = await DisplayPromptAsync("Şifre Güncelle", "Mevcut şifrenizi girin:", "Mevcut şifre", maxLength: -1, keyboard: Keyboard.Text);
             if (current == null)
             {
                 return;
             }
 
-            var newPassword = await DisplayPromptAsync("Şifre Güncelle", "Yeni şifreyi girin:", isPassword: true);
+            var newPassword = await DisplayPromptAsync("Şifre Güncelle", "Yeni şifreyi girin:", "Yeni şifre", maxLength: -1, keyboard: Keyboard.Text);
             if (string.IsNullOrWhiteSpace(newPassword))
             {
                 return;
