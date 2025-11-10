@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Stok.Pages.StockPage"
+             Title="Envanter">
+    <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,*"
+          Padding="20"
+          RowSpacing="12">
+        <Grid ColumnDefinitions="Auto,*,Auto"
+              Grid.Row="0"
+              Padding="0,0,0,8">
+            <Button Text="←"
+                    FontSize="20"
+                    Padding="6"
+                    BackgroundColor="Transparent"
+                    Clicked="OnBackClicked" />
+            <Button Grid.Column="1"
+                    Text="☰"
+                    FontSize="20"
+                    BackgroundColor="Transparent"
+                    Clicked="OnToggleMenu" />
+            <Button Grid.Column="2"
+                    Text="⛃"
+                    FontSize="18"
+                    Padding="6"
+                    BackgroundColor="Transparent"
+                    TextColor="{DynamicResource SecondaryTextColor}"
+                    Clicked="OnFilterIconClicked" />
+        </Grid>
+
+        <Frame Grid.Row="1"
+               IsVisible="{Binding IsMenuOpen}"
+               Padding="16"
+               BackgroundColor="{DynamicResource SecondaryColor}"
+               HasShadow="False"
+               BorderColor="{DynamicResource SecondaryTextColor}">
+            <VerticalStackLayout Spacing="8">
+                <Label Text="MENÜ"
+                       FontAttributes="Bold"
+                       FontSize="18" />
+                <Button Text="Stok Yönetimi"
+                        HorizontalOptions="Fill"
+                        Clicked="OnOpenStockManagement" />
+                <Button Text="Excel İçe Aktar"
+                        HorizontalOptions="Fill"
+                        Clicked="OnImportExcel" />
+                <Button Text="Excel Dışa Aktar"
+                        HorizontalOptions="Fill"
+                        Clicked="OnExportExcel" />
+                <Button Text="Cihaz Adetleri"
+                        HorizontalOptions="Fill"
+                        Clicked="OnShowDeviceCounts" />
+            </VerticalStackLayout>
+        </Frame>
+
+        <SearchBar Grid.Row="2"
+                   x:Name="Search"
+                   Placeholder="Malzeme ara"
+                   TextChanged="OnSearchTextChanged" />
+
+        <Grid Grid.Row="3"
+              ColumnDefinitions="*,Auto"
+              ColumnSpacing="12">
+            <ScrollView Orientation="Horizontal">
+                <FlexLayout BindableLayout.ItemsSource="{Binding FilterOptions}"
+                            AlignItems="Center"
+                            Direction="Row"
+                            Spacing="8">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate>
+                            <Button Text="{Binding Title}"
+                                    Padding="12,6"
+                                    BackgroundColor="#ECEFF1"
+                                    TextColor="{DynamicResource PrimaryTextColor}"
+                                    Clicked="OnFilterClicked">
+                                <Button.Triggers>
+                                    <DataTrigger TargetType="Button"
+                                                Binding="{Binding IsActive}"
+                                                Value="True">
+                                        <Setter Property="BackgroundColor" Value="{DynamicResource PrimaryColor}" />
+                                        <Setter Property="TextColor" Value="White" />
+                                    </DataTrigger>
+                                </Button.Triggers>
+                            </Button>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </FlexLayout>
+            </ScrollView>
+            <Label Grid.Column="1"
+                   Text="{Binding TotalQuantityDisplay}"
+                   FontAttributes="Bold"
+                   VerticalOptions="Center"
+                   HorizontalTextAlignment="End" />
+        </Grid>
+
+        <Grid Grid.Row="4"
+              ColumnDefinitions="*,Auto,Auto"
+              ColumnSpacing="12"
+              Padding="0,8">
+            <Label Text="Malzeme"
+                   FontAttributes="Bold"
+                   VerticalOptions="Center" />
+            <Button Grid.Column="1"
+                    Text="SKT"
+                    BackgroundColor="Transparent"
+                    TextColor="{Binding ExpirySortColor}"
+                    Clicked="OnExpirySortClicked" />
+            <Button Grid.Column="2"
+                    Text="Miktar"
+                    BackgroundColor="Transparent"
+                    TextColor="{Binding QuantitySortColor}"
+                    Clicked="OnQuantitySortClicked" />
+        </Grid>
+
+        <CollectionView Grid.Row="5"
+                        ItemsSource="{Binding GroupedMaterials}"
+                        IsGrouped="True"
+                        SelectionMode="None">
+            <CollectionView.GroupHeaderTemplate>
+                <DataTemplate>
+                    <Grid ColumnDefinitions="Auto,*,Auto"
+                          Padding="0,4"
+                          ColumnSpacing="12">
+                        <Button Text="{Binding ToggleGlyph}"
+                                BackgroundColor="Transparent"
+                                FontAttributes="Bold"
+                                CommandParameter="{Binding .}"
+                                Clicked="OnToggleGroupClicked" />
+                        <Label Grid.Column="1"
+                               Text="{Binding Key}"
+                               FontAttributes="Bold"
+                               VerticalOptions="Center" />
+                        <Label Grid.Column="2"
+                               Text="{Binding TotalQuantity, StringFormat='Toplam: {0}'}"
+                               HorizontalOptions="End"
+                               VerticalOptions="Center"
+                               TextColor="{DynamicResource SecondaryTextColor}" />
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.GroupHeaderTemplate>
+            <CollectionView.GroupItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid BindableLayout.ItemsSource="{Binding VisibleItems}">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate>
+                                    <SwipeView>
+                                        <SwipeView.RightItems>
+                                            <SwipeItems Mode="Reveal">
+                                                <SwipeItem Text="Sil"
+                                                           BackgroundColor="#B71C1C"
+                                                           CommandParameter="{Binding .}"
+                                                           Invoked="OnDeleteMaterial" />
+                                                <SwipeItem Text="Çıkar"
+                                                           BackgroundColor="#F57C00"
+                                                           CommandParameter="{Binding .}"
+                                                           Invoked="OnWithdrawMaterial" />
+                                                <SwipeItem Text="Düzenle"
+                                                           BackgroundColor="#1976D2"
+                                                           CommandParameter="{Binding .}"
+                                                           Invoked="OnEditMaterial" />
+                                            </SwipeItems>
+                                        </SwipeView.RightItems>
+                                        <Frame Margin="0,0,0,12"
+                                               Padding="14"
+                                               HasShadow="False"
+                                               BorderColor="{DynamicResource SecondaryColor}">
+                                            <Grid ColumnDefinitions="*,Auto"
+                                                  RowDefinitions="Auto,Auto,Auto"
+                                                  ColumnSpacing="12"
+                                                  RowSpacing="4">
+                                                <Label Text="{Binding Name}"
+                                                       FontSize="18"
+                                                       FontAttributes="Bold" />
+                                                <Label Grid.Column="1"
+                                                       Text="{Binding Quantity, StringFormat='Adet: {0}'}"
+                                                       VerticalOptions="Center"
+                                                       FontAttributes="Bold" />
+                                                <Label Grid.Row="1"
+                                                       Grid.ColumnSpan="2"
+                                                       Text="{Binding SerialOrLotDisplay}"
+                                                       FontSize="14"
+                                                       TextColor="{DynamicResource SecondaryTextColor}" />
+                                                <Label Grid.Row="2"
+                                                       Grid.ColumnSpan="2"
+                                                       Text="{Binding OwnerUser, StringFormat='Sahip: {0}'}"
+                                                       FontSize="13"
+                                                       TextColor="{DynamicResource SecondaryTextColor}" />
+                                            </Grid>
+                                        </Frame>
+                                    </SwipeView>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </Grid>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.GroupItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>

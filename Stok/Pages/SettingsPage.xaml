@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Stok.Pages.SettingsPage"
+             Title="Ayarlar">
+    <ScrollView>
+        <VerticalStackLayout Padding="24" Spacing="18">
+            <Label Text="Kullanıcı Yönetimi"
+                   FontSize="28"
+                   FontAttributes="Bold" />
+
+            <Frame Padding="16" HasShadow="False" BorderColor="{DynamicResource SecondaryColor}">
+                <VerticalStackLayout Spacing="12">
+                    <Button Text="E-posta Güncelle"
+                            HorizontalOptions="Fill"
+                            Clicked="OnChangeEmail" />
+                    <Button Text="Şifre Güncelle"
+                            HorizontalOptions="Fill"
+                            Clicked="OnChangePassword" />
+                    <Button Text="Çıkış Yap"
+                            HorizontalOptions="Fill"
+                            Clicked="OnLogout" />
+                </VerticalStackLayout>
+            </Frame>
+
+            <Label Text="Veri Yönetimi"
+                   FontSize="22"
+                   FontAttributes="Semibold" />
+
+            <Frame Padding="16" HasShadow="False" BorderColor="{DynamicResource SecondaryColor}">
+                <VerticalStackLayout Spacing="12">
+                    <Button Text="Stok Verilerini Temizle"
+                            HorizontalOptions="Fill"
+                            Clicked="OnClearStock" />
+                    <Button Text="Geçmiş Kayıtlarını Temizle"
+                            HorizontalOptions="Fill"
+                            Clicked="OnClearHistory" />
+                    <Button Text="Tüm Verileri Dışa Aktar"
+                            HorizontalOptions="Fill"
+                            Clicked="OnExportData" />
+                </VerticalStackLayout>
+            </Frame>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

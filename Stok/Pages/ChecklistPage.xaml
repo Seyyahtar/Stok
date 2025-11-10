@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Stok.Pages.ChecklistPage"
+             Title="Kontrol Listesi">
+    <Grid Padding="24" RowDefinitions="Auto,Auto,*" RowSpacing="16">
+        <VerticalStackLayout Spacing="4">
+            <Label Text="Kontrol Listesi"
+                   FontSize="30"
+                   FontAttributes="Bold" />
+            <Label Text="{Binding SummaryText}"
+                   FontSize="15"
+                   TextColor="{DynamicResource SecondaryTextColor}" />
+        </VerticalStackLayout>
+
+        <VerticalStackLayout Grid.Row="1" Spacing="12">
+            <Button Text="Excel'den Liste İçe Aktar"
+                    Clicked="OnImportExcel"
+                    HorizontalOptions="Start" />
+            <HorizontalStackLayout Spacing="12">
+                <Button Text="Tümünü Seç"
+                        Clicked="OnSelectAll"
+                        HorizontalOptions="Start" />
+                <Button Text="Tamamlandı Olarak İşaretle"
+                        Clicked="OnMarkCompleted"
+                        HorizontalOptions="Start" />
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+
+        <CollectionView Grid.Row="2"
+                        ItemsSource="{Binding ChecklistItems}"
+                        SelectionMode="None">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame Margin="0,0,0,12"
+                           Padding="16"
+                           HasShadow="False"
+                           BorderColor="{DynamicResource SecondaryColor}">
+                        <Grid ColumnDefinitions="Auto,*,Auto" RowDefinitions="Auto,Auto,Auto" RowSpacing="6" ColumnSpacing="12">
+                            <CheckBox IsChecked="{Binding IsDone}"
+                                      Grid.RowSpan="3"
+                                      VerticalOptions="Start"
+                                      CheckedChanged="OnItemChecked" />
+                            <Label Grid.Column="1"
+                                   Text="{Binding OrderDisplay}"
+                                   FontAttributes="Bold" />
+                            <Label Grid.Column="2"
+                                   Text="{Binding TimeDisplay}"
+                                   HorizontalOptions="End"
+                                   FontAttributes="Bold" />
+                            <Label Grid.Row="1"
+                                   Grid.Column="1"
+                                   Grid.ColumnSpan="2"
+                                   Text="{Binding Patient}"
+                                   FontSize="16" />
+                            <Label Grid.Row="2"
+                                   Grid.Column="1"
+                                   Text="{Binding Hospital}"
+                                   FontSize="13"
+                                   TextColor="{DynamicResource SecondaryTextColor}" />
+                            <Label Grid.Row="2"
+                                   Grid.Column="2"
+                                   Text="{Binding Phone}"
+                                   FontAttributes="Italic"
+                                   HorizontalOptions="End">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnPhoneTapped"
+                                                          CommandParameter="{Binding Phone}" />
+                                </Label.GestureRecognizers>
+                            </Label>
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <Button Grid.Row="2"
+                Text="Kontrolü Tamamla ve Kaydet"
+                Clicked="OnSaveChecklist"
+                HorizontalOptions="Fill"
+                VerticalOptions="End"
+                HeightRequest="54"
+                BackgroundColor="{DynamicResource PrimaryColor}"
+                TextColor="White" />
+    </Grid>
+</ContentPage>

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Stok.Pages.HistoryPage"
+             Title="Geçmiş">
+    <Grid Padding="24" RowDefinitions="Auto,Auto,*" RowSpacing="16">
+        <Label Text="İşlem Geçmişi"
+               FontSize="30"
+               FontAttributes="Bold" />
+
+        <VerticalStackLayout Grid.Row="1" Spacing="12">
+            <SearchBar Placeholder="Geçmişte ara"
+                       TextChanged="OnSearchTextChanged"
+                       SearchButtonPressed="OnSearchButtonPressed" />
+            <HorizontalStackLayout Spacing="8">
+                <Button Text="Tümü"
+                        Clicked="OnFilterClicked"
+                        CommandParameter="All"
+                        BackgroundColor="{Binding AllFilterColor}" />
+                <Button Text="Stok"
+                        Clicked="OnFilterClicked"
+                        CommandParameter="Stock"
+                        BackgroundColor="{Binding StockFilterColor}" />
+                <Button Text="Vaka"
+                        Clicked="OnFilterClicked"
+                        CommandParameter="Case"
+                        BackgroundColor="{Binding CaseFilterColor}" />
+                <Button Text="Kontrol"
+                        Clicked="OnFilterClicked"
+                        CommandParameter="Checklist"
+                        BackgroundColor="{Binding ChecklistFilterColor}" />
+            </HorizontalStackLayout>
+            <Button Text="Filtrelenen Listeyi Excel'e Aktar"
+                    Clicked="OnExportFiltered"
+                    HorizontalOptions="Start" />
+        </VerticalStackLayout>
+
+        <CollectionView Grid.Row="2"
+                        ItemsSource="{Binding HistoryItems}"
+                        SelectionMode="None">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <SwipeView>
+                        <SwipeView.RightItems>
+                            <SwipeItems Mode="Execute">
+                                <SwipeItem Text="Geri Al"
+                                           BackgroundColor="IndianRed"
+                                           Invoked="OnUndoHistory"
+                                           CommandParameter="{Binding .}" />
+                                <SwipeItem Text="Excel"
+                                           BackgroundColor="SteelBlue"
+                                           Invoked="OnExportHistoryItem"
+                                           CommandParameter="{Binding .}" />
+                            </SwipeItems>
+                        </SwipeView.RightItems>
+                        <Frame Margin="0,0,0,12"
+                               Padding="16"
+                               HasShadow="False"
+                               BorderColor="{DynamicResource SecondaryColor}">
+                            <VerticalStackLayout Spacing="8">
+                                <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto">
+                                    <Label Text="{Binding Summary}" FontAttributes="Bold" />
+                                    <Label Grid.Column="1"
+                                           Text="{Binding CreatedAt, StringFormat='{0:dd.MM.yyyy HH:mm}'}"
+                                           TextColor="{DynamicResource SecondaryTextColor}" />
+                                    <Label Grid.Row="1"
+                                           Grid.ColumnSpan="2"
+                                           Text="{Binding CreatedByDisplay}"
+                                           FontSize="13"
+                                           TextColor="{DynamicResource SecondaryTextColor}" />
+                                </Grid>
+                                <VerticalStackLayout Spacing="4"
+                                                     BindableLayout.ItemsSource="{Binding Details}">
+                                    <BindableLayout.ItemTemplate>
+                                        <DataTemplate>
+                                            <Frame Padding="8"
+                                                   Margin="0,0,0,4"
+                                                   HasShadow="False"
+                                                   BorderColor="{DynamicResource SecondaryColor}">
+                                                <Label Text="{Binding .}" FontSize="13" />
+                                            </Frame>
+                                        </DataTemplate>
+                                    </BindableLayout.ItemTemplate>
+                                </VerticalStackLayout>
+                            </VerticalStackLayout>
+                        </Frame>
+                    </SwipeView>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Stok.Pages.DeviceCountsPage"
+             Title="Cihaz Adetleri">
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="12">
+            <CollectionView ItemsSource="{Binding Categories}"
+                            SelectionMode="None">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame Padding="12"
+                               BorderColor="{DynamicResource SecondaryColor}"
+                               HasShadow="False"
+                               Margin="0,0,0,12">
+                            <VerticalStackLayout Spacing="8">
+                                <Grid ColumnDefinitions="Auto,*,Auto">
+                                    <Button Text="{Binding ToggleGlyph}"
+                                            BackgroundColor="Transparent"
+                                            FontAttributes="Bold"
+                                            CommandParameter="{Binding .}"
+                                            Clicked="OnToggleCategory" />
+                                    <Label Grid.Column="1"
+                                           Text="{Binding Title}"
+                                           FontAttributes="Bold"
+                                           VerticalOptions="Center" />
+                                    <Label Grid.Column="2"
+                                           Text="{Binding TotalQuantity, StringFormat='Toplam: {0}'}"
+                                           VerticalOptions="Center"
+                                           TextColor="{DynamicResource SecondaryTextColor}" />
+                                </Grid>
+                                <Grid BindableLayout.ItemsSource="{Binding VisibleModels}">
+                                    <BindableLayout.ItemTemplate>
+                                        <DataTemplate>
+                                            <Frame Padding="10"
+                                                   BorderColor="{DynamicResource SecondaryColor}"
+                                                   HasShadow="False"
+                                                   Margin="0,0,0,8">
+                                                <VerticalStackLayout Spacing="6">
+                                                    <Grid ColumnDefinitions="Auto,*,Auto">
+                                                        <Button Text="{Binding ToggleGlyph}"
+                                                                BackgroundColor="Transparent"
+                                                                FontAttributes="Bold"
+                                                                CommandParameter="{Binding .}"
+                                                                Clicked="OnToggleModel" />
+                                                        <Label Grid.Column="1"
+                                                               Text="{Binding ModelName}"
+                                                               VerticalOptions="Center" />
+                                                        <Label Grid.Column="2"
+                                                               Text="{Binding TotalQuantity, StringFormat='{0} adet'}"
+                                                               VerticalOptions="Center"
+                                                               TextColor="{DynamicResource SecondaryTextColor}" />
+                                                    </Grid>
+                                                    <VerticalStackLayout BindableLayout.ItemsSource="{Binding VisibleItems}"
+                                                                        Spacing="4">
+                                                        <BindableLayout.ItemTemplate>
+                                                            <DataTemplate>
+                                                                <Grid ColumnDefinitions="*,Auto"
+                                                                      ColumnSpacing="8">
+                                                                    <Label Text="{Binding Name}" />
+                                                                    <Label Grid.Column="1"
+                                                                           Text="{Binding Quantity}" />
+                                                                </Grid>
+                                                            </DataTemplate>
+                                                        </BindableLayout.ItemTemplate>
+                                                    </VerticalStackLayout>
+                                                </VerticalStackLayout>
+                                            </Frame>
+                                        </DataTemplate>
+                                    </BindableLayout.ItemTemplate>
+                                </Grid>
+                            </VerticalStackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
