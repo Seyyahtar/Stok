@@ -7,7 +7,9 @@ namespace Stok
 {
     public partial class App : Application
     {
-        public App()
+        private readonly AuthService _authService;
+
+        public App(IServiceProvider serviceProvider, AuthService authService)
         {
             InitializeComponent();
             DetermineStartupPage();
